@@ -4,14 +4,7 @@ class Audience(
     private var bag: Bag,
 ) {
     fun buy(ticket: Ticket): Long {
-        if (this.bag.hasInvitation()) {
-            this.bag.setTicket(ticket)
-            return 0L
-        } else {
-            this.bag.setTicket(ticket)
-            this.bag.minusAmount(ticket.fee)
-            return ticket.fee
-        }
+        return this.bag.hold(ticket)
     }
 }
 
@@ -20,15 +13,26 @@ data class Bag(
     private var invitation: Invitation?,
     private var ticket: Ticket?
 ) {
-    fun hasInvitation(): Boolean {
+    private fun hasInvitation(): Boolean {
         return this.invitation != null
     }
 
-    fun setTicket(ticket: Ticket) {
+    private fun setTicket(ticket: Ticket) {
         this.ticket = ticket
     }
 
-    fun minusAmount(amount: Long) {
+    private fun minusAmount(amount: Long) {
         this.amount -= amount
+    }
+
+    fun hold(ticket: Ticket): Long {
+        if (this.hasInvitation()) {
+            this.setTicket(ticket)
+            return 0L
+        } else {
+            this.setTicket(ticket)
+            this.minusAmount(ticket.fee)
+            return ticket.fee
+        }
     }
 }

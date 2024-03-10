@@ -1,6 +1,6 @@
 package ko.test.domain
 
-data class Office(
+data class TicketOffice(
     private var amount: Long,
     private var tickets: MutableList<Ticket>
 ) {
@@ -14,7 +14,7 @@ data class Office(
 }
 
 data class TicketSeller(
-    private var ticketOffice: Office
+    private var ticketOffice: TicketOffice
 ) {
     fun sellTo(audience: Audience) {
         val ticket = this.ticketOffice.getTicket()

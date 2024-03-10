@@ -3,7 +3,20 @@
  */
 package ko.test
 
+import ko.test.domain.*
+
 
 fun main() {
-    println("Hello World!")
+    val ticket = Ticket(1000)
+    val bag = Bag(10000, null, ticket)
+    val office = TicketOffice(10000, mutableListOf(ticket))
+    val audience = Audience(bag)
+    val seller = TicketSeller(office)
+    val theater = Theater(seller)
+
+    println(theater)
+
+    theater.enter(audience)
+
+    println(theater)
 }
