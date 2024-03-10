@@ -2,26 +2,39 @@
 classDiagram
     direction LR
     class Audience {
-        +Bag bag
+        -Bag bag
+        +buy(Ticket) Long
     }
+    Audience --> Bag
+    Audience ..> Ticket
+
     class Bag {
-        +Long amount
-        +Invitation invitation
-        +Ticket ticket
+        -Long amount
+        -Invitation invitation
+        -Ticket ticket
         +hasInvitation() Boolean
-        +hasTicket() Boolean
+        +setTicket(Ticket)
         +minusAmount(Long)
-        +plusAmount(Long)
     }
+    Bag --> Invitation
+    Bag --> Ticket
+
     class Office {
-        +Long amount
-        +List~Ticket~ tickets
+        -Long amount
+        -List~Ticket~ tickets
         +plusAmount(Long)
         +minusAmount(Long)
     }
+    Office o-- Ticket
+
     class TicketSeller {
-        +Office ticketOffice
+        -Office ticketOffice
+        +sellTo(Audience)
     }
+    TicketSeller --> Office
+    TicketSeller ..> Audience
+    TicketSeller ..> Ticket
+
     class Invitation {
         +String time
     }
@@ -29,18 +42,9 @@ classDiagram
         +Long fee
     }
     class Theater {
-        +TicketSeller ticketSeller
+        -TicketSeller ticketSeller
         +enter(Audience)
     }
-    Audience --> Bag
-    Bag --> Invitation
-    Bag --> Ticket
-    Office o-- Ticket
-    TicketSeller --> Office
     Theater --> TicketSeller
     Theater ..> Audience
-    Theater ..> Bag
-    Theater ..> Office
-    Theater ..> Ticket
-
 ```

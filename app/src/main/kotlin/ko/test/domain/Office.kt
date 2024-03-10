@@ -1,15 +1,11 @@
 package ko.test.domain
 
 data class Office(
-    var amount: Long,
-    var tickets: MutableList<Ticket>
+    private var amount: Long,
+    private var tickets: MutableList<Ticket>
 ) {
     fun plusAmount(amount: Long) {
         this.amount += amount
-    }
-
-    fun minusAmount(amount: Long) {
-        this.amount -= amount
     }
 
     fun getTicket(): Ticket {
@@ -18,21 +14,18 @@ data class Office(
 }
 
 data class TicketSeller(
-    var ticketOffice: Office
-)
+    private var ticketOffice: Office
+) {
+    fun sellTo(audience: Audience) {
+        val ticket = this.ticketOffice.getTicket()
+        this.ticketOffice.plusAmount(audience.buy(ticket))
+    }
+}
 
 data class Theater(
-    var ticketSeller: TicketSeller
+    private var ticketSeller: TicketSeller
 ) {
     fun enter(audience: Audience) {
-        if (audience.bag.hasInvitation()) {
-            val ticket = ticketSeller.ticketOffice.getTicket()
-            audience.bag.ticket = ticket
-        } else {
-            val ticket = ticketSeller.ticketOffice.getTicket()
-            audience.bag.minusAmount(ticket.fee)
-            ticketSeller.ticketOffice.plusAmount(ticket.fee)
-            audience.bag.ticket = ticket
-        }
+        this.ticketSeller.sellTo(audience)
     }
 }
