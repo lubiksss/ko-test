@@ -15,13 +15,16 @@ fun main() {
     val book2 = Book("2", "The Book", "The Author")
 
     val library = InMemoryAdaptor()
-    library.addBook(book)
-    library.addBook(book2)
+    listOf(book, book2).forEach { library.addBook(it) }
+
+    println("1. Books in library:")
     library.listBooks().forEach { println(it) }
 
     val service = BorrowBookService(library)
+    val sampleAdaptor = SampleAdaptor(service)
 
-    SampleAdaptor(service).borrowBook(jake, book)
+    sampleAdaptor.borrowBook(jake, book)
 
+    println("2. Books in library:")
     library.listBooks().forEach { println(it) }
 }

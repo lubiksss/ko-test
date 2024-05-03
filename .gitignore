@@ -61,7 +61,8 @@ cmake-build-*/
 *.iws
 
 # IntelliJ
-out/
+/app/out
+
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -154,7 +155,8 @@ replay_pid*
 .LSOverride
 
 # Icon must end with two \r
-Icon
+Icon
+
 
 # Thumbnails
 ._*
