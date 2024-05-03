@@ -13,5 +13,7 @@ class BorrowBookService(private val library: LibraryPort) : BorrowBookUseCase {
         }
         library.removeBook(book)
         person.borrowBook(book)
+
+        println("${person.name} borrowed ${book.title}")
     }
 }

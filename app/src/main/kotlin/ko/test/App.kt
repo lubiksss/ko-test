@@ -3,7 +3,7 @@
  */
 package ko.test
 
-import ko.test.adapter.`in`.SampleAdaptor
+import ko.test.adapter.`in`.ConsoleAdapter
 import ko.test.adapter.out.InMemoryAdaptor
 import ko.test.application.BorrowBookService
 import ko.test.domain.Book
@@ -21,10 +21,17 @@ fun main() {
     library.listBooks().forEach { println(it) }
 
     val service = BorrowBookService(library)
-    val sampleAdaptor = SampleAdaptor(service)
 
-    sampleAdaptor.borrowBook(jake, book)
+//    //Use Sample Adaptor
+//    val sampleAdaptor = SampleAdaptor(service)
+//
+//    sampleAdaptor.borrowBook(jake, book)
+//
+//    println("2. Books in library:")
+//    library.listBooks().forEach { println(it) }
 
-    println("2. Books in library:")
-    library.listBooks().forEach { println(it) }
+    //Use Console Adaptor
+    val consoleAdapter = ConsoleAdapter(service)
+
+    consoleAdapter.borrowBook(listOf(jake), library.listBooks())
 }
